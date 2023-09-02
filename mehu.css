@@ -25,6 +25,12 @@ body {
   visibility: hidden;
 }
 
+#contentbox {
+  width: 80%;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 .logos {
   text-align: center;
 }

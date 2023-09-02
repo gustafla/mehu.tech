@@ -24,8 +24,36 @@ in vec2 FragCoord;
 out vec4 FragColor;
 uniform float u_Time;
 uniform vec2 u_Resolution;
+mat2 rotation(float a) {
+  return mat2(
+    cos(a), -sin(a),
+    sin(a), cos(a)
+  );
+}
+float sine(float x, float f, float t) {
+  return cos(x * f + t) * 0.5 + 0.5;
+}
+float aspectRatio() {
+  return u_Resolution.x / u_Resolution.y;
+}
+float pattern(vec2 uv, float bias) {
+  return clamp((cos(uv.x) * cos(uv.y) + bias) * 3., 0., 1.);
+}
 void main() {
-  FragColor = vec4(sin(u_Time + FragCoord.x), 0., 1., 1.);
+  vec2 uv = vec2(FragCoord.x * aspectRatio(), FragCoord.y);
+  uv = rotation(sine(u_Time, 0.22, 0.)) * uv;
+  uv += vec2(sin(FragCoord.y + u_Time * 0.3), sin(FragCoord.x * 0.5 + u_Time * 0.2)) * 0.2;
+  uv += vec2(sin(FragCoord.y * 2.22 + u_Time * 0.4), sin(FragCoord.x * 1.11 + u_Time * 0.4)) * 0.1;
+  uv *= sine(u_Time, 0.1, u_Time * 0.2) * 50. + 140.;
+
+  vec2 st = vec2(FragCoord.x * aspectRatio(), FragCoord.y);
+  st += vec2(sin(FragCoord.y * 0.6 + u_Time * 0.7), sin(FragCoord.x * 0.3 + u_Time * 0.3)) * 0.6;
+  float bias = cos(st.x) * 0.7 + sin(st.y) * 0.7;
+
+  vec3 pattern = vec3(pattern(uv, bias));
+
+  vec3 bg = vec3(sin(u_Time + FragCoord.x) * 0.5 + 0.5, 0., 1.);
+  FragColor = vec4(mix(bg, pattern, sine(u_Time, 0.9, 2.) * 0.1 + 0.6), 1.);
 }
 `;
 
