@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "PC";
+  src: url("font.woff") format("woff");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-family: "PC";
+}
+
+h1 {
+  text-align: center;
+}
+
+body {
+  height: 100%;
+  background-color: black;
+}
+
+#bgcanvas {
+  z-index: -1;
+  position: absolute;
+  visibility: hidden;
+}
+
+.logos {
+  text-align: center;
+}
