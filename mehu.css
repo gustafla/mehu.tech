@@ -19,6 +19,20 @@ html, body {
   height: 100%;
 }
 
+table {
+  border-collapse: collapse;
+  margin: 40px;
+}
+
+thead {
+  border-bottom: 1px dashed white;
+}
+
+th, td {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
 #bgcanvas {
   z-index: -1;
   position: fixed;
