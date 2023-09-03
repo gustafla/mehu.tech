@@ -41,7 +41,7 @@ th, td {
 }
 
 #contentbox {
-  width: 75%;
+  width: 800px;
   margin: auto;
   padding: 40px;
   background-image: linear-gradient(to right,
