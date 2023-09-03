@@ -10,7 +10,7 @@
 	<body>
 		<canvas id="bgcanvas"></canvas>
 		<div id="contentbox">
-<h1><pre>
+<pre id="logo">
         :::   :::    ::::::::::  :::    :::  :::    ::: 
       :+:+: :+:+:   :+:         :+:    :+:  :+:    :+:  
     +:+ +:+:+ +:+  +:+         +:+    +:+  +:+    +:+   
@@ -18,13 +18,37 @@
   +#+       +#+  +#+         +#+    +#+  +#+    +#+     
  #+#       #+#  #+#         #+#    #+#  #+#    #+#      
 ###       ###  ##########  ###    ###   ########        
-</pre></h1>
-			<div class="content">
+</pre>
+			<div id="logolinks">
+				<a href="https://www.pouet.net/groups.php?which=12323" class="logolink">pouet</a>
+				<a href="https://demozoo.org/groups/49908/" class="logolink">demozoo</a>
+				<a href="https://github.com/gustafla/linux_demo" class="logolink">build Linux demos!</a>
 			</div>
-			<p>Test paragraph test paragraph wahoo</p>
-			<div class="logos">
-				<a href="https://www.oracle.com/linux/"><img src= "/icons/oraclelinux.png" alt="[ Powered by Oracle Linux ]" /></a>
-				<a href="https://nginx.org/"><img src="/icons/nginx-logo.png" alt="[ nginx ]" /></a>
+			<div id="inner">
+				<p>We are back. Newskool, midskool, Linux rulez. <a href=http://sooda.dy.fi/foo/asennagentoo-html5/>Install Gentoo!</a></p>
+				<h2>Demos</h2>
+				<div class="prod">
+					<h3><a href="https://www.pouet.net/prod.php?which=91921">2022 - Assembly - Chelidonura</a></h3>
+					<p>This widescreen demo was the result of learning <a href="https://wgpu.rs/">wgpu</a>. Also submitted prs to
+					<a href="https://github.com/demoscene-rs/rust-rocket">a new rocket library</a>.
+					First time doing deferred rendering and shadow mapping etc proper engine nerd things. And I think it kinda shows ;D
+					So in other words, it's still a coder demo as always. And a pretty bloated one at that.</p>
+					<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/VdKPBGmvSmk?si=EpfBA5RegU3wJor7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+				</div>
+				<div class="prod">
+					<h3><a href="https://www.pouet.net/prod.php?which=71442">2017 - Assembly - dmprty</a></h3>
+					<p>A demo for the Raspberry Pi (original model B). I wish I had titled it "Going Down" or any other better name.</p>
+					<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/zuDQlzIyYp8?si=01DO89aYtP0yCyET" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+				</div>
+				<div class="prod">
+					<h3><a href="https://www.pouet.net/prod.php?which=66086">2015 - Assembly - The Future</a></h3>
+					<p>A demo for the Raspberry Pi (original model B). Somehow this demo got a bunch of attention, perhaps the compo
+					wasn't very competitive that year. It has some nice scenes but the "end part" coder colors aren't great at all.</p>
+					<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/WUEJ30QdHz4?si=v2jXzBH3DW598TIu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+				</div>
+				<div id="icons">
+					<a href="https://www.oracle.com/linux/"><img src= "/icons/oraclelinux.png" alt="[ Powered by Oracle Linux ]" /></a>
+				</div>
 			</div>
 		</div>
 		<script defer src="/shader.js"></script>

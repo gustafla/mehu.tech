@@ -4,33 +4,64 @@
 }
 
 * {
-  margin: 0;
-  padding: 0;
   color: white;
+  text-shadow: 3px 3px grey;
   font-family: "PC";
 }
 
-h1 {
-  text-align: center;
+body {
+  background-color: black;
 }
 
-body {
+html, body {
+  margin: 0;
+  padding: 0;
   height: 100%;
-  background-color: black;
 }
 
 #bgcanvas {
   z-index: -1;
-  position: absolute;
+  position: fixed;
   visibility: hidden;
 }
 
 #contentbox {
-  width: 80%;
+  width: 75%;
   margin: auto;
-  background-color: rgba(0, 0, 0, 0.7);
+  padding: 40px;
+  background-image: linear-gradient(to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.7) 5%,
+    rgba(0, 0, 0, 0.7) 95%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
-.logos {
-  text-align: center;
+#inner {
+  margin: 6%;
+}
+
+#logo {
+  display: flex;
+  justify-content: center;
+  line-height: 0.9;
+  margin: 40px;
+  font-size: 1.3em;
+}
+
+#logolinks {
+  display: flex;
+  justify-content: center;
+}
+
+.logolink {
+  padding: 1em;
+}
+
+#icons{
+  margin-top: 40px;
+}
+
+.prod {
+  margin-bottom: 4em;
 }
