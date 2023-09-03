@@ -14,6 +14,7 @@ body {
 }
 
 html, body {
+  min-width: 960px;
   margin: 0;
   padding: 0;
   height: 100%;
