@@ -5,7 +5,6 @@
 
 * {
   color: white;
-  text-shadow: 3px 3px grey;
   font-family: "PC";
 }
 
@@ -46,8 +45,8 @@ th, td {
   padding: 40px;
   background-image: linear-gradient(to right,
     rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.7) 5%,
-    rgba(0, 0, 0, 0.7) 95%,
+    rgba(0, 0, 0, 0.8) 5%,
+    rgba(0, 0, 0, 0.8) 95%,
     rgba(0, 0, 0, 0) 100%
   );
 }
@@ -59,9 +58,21 @@ th, td {
 #logo {
   display: flex;
   justify-content: center;
-  line-height: 0.9;
+  line-height: 0.8;
   margin: 40px;
-  font-size: 1.3em;
+  font-size: x-large;
+}
+
+#logo, h1, h2, h3 {  
+  text-shadow: 2px 2px grey;
+}
+
+h2 {
+  font-size: x-large;
+}
+
+h3 {
+  font-size: large;
 }
 
 #logolinks {

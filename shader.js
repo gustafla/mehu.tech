@@ -41,19 +41,20 @@ float pattern(vec2 uv, float bias) {
 }
 void main() {
   vec2 uv = vec2(FragCoord.x * aspectRatio(), FragCoord.y);
-  uv = rotation(sine(u_Time, 0.22, 0.)) * uv;
+  uv = rotation(sine(u_Time, 0.12, 0.) * 2.) * uv;
   uv += vec2(sin(FragCoord.y + u_Time * 0.3), sin(FragCoord.x * 0.5 + u_Time * 0.2)) * 0.2;
   uv += vec2(sin(FragCoord.y * 2.22 + u_Time * 0.4), sin(FragCoord.x * 1.11 + u_Time * 0.4)) * 0.1;
   uv *= sine(u_Time, 0.1, u_Time * 0.2) * 50. + 140.;
 
-  vec2 st = vec2(FragCoord.x * aspectRatio(), FragCoord.y);
+  vec2 st = vec2(FragCoord.x * aspectRatio(), FragCoord.y) * 1.4;
   st += vec2(sin(FragCoord.y * 0.6 + u_Time * 0.7), sin(FragCoord.x * 0.3 + u_Time * 0.3)) * 0.6;
-  float bias = cos(st.x) * 0.7 + sin(st.y) * 0.7;
+  st += vec2(sin(FragCoord.y * 2.6 + u_Time * 0.7), sin(FragCoord.x * 4.3 + u_Time * 0.3)) * sine(u_Time, 0.75, 0.) * 2.3;
+  float bias = cos(st.x + u_Time) * 0.4 + sin(st.y-u_Time * 0.3) * 0.4 + cos(st.y + u_Time * 0.5) * 0.2;
 
   vec3 pattern = vec3(pattern(uv, bias));
 
   vec3 bg = vec3(sin(u_Time + FragCoord.x) * 0.5 + 0.5, 0., 1.);
-  FragColor = vec4(mix(bg, pattern, sine(u_Time, 0.9, 2.) * 0.1 + 0.6), 1.);
+  FragColor = vec4(mix(bg, pattern, sine(u_Time, 0.9, 2.) * 0.2 + 0.6), 1.);
 }
 `;
 
@@ -77,7 +78,7 @@ const render = (time) => {
   requestAnimationFrame(render);
 }
 
-window.onload = () => {
+document.addEventListener("DOMContentLoaded", () => {
   let success = false;
 
   canvas = document.querySelector("#bgcanvas");
@@ -123,4 +124,4 @@ window.onload = () => {
   gl.bindVertexArray(null);
 
   requestAnimationFrame(render);
-};
+});
