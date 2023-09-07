@@ -50,7 +50,7 @@ void main() {
   st += vec2(sin(FragCoord.y * 0.6 + u_Time * 0.7), sin(FragCoord.x * 0.3 + u_Time * 0.3)) * 0.6;
   st += vec2(sin(FragCoord.y * 2.6 + u_Time * 0.7), sin(FragCoord.x * 4.3 + u_Time * 0.3)) * sine(u_Time, 0.75, 0.) * 2.3;
   float bias = cos(st.x + u_Time) * 0.4 + sin(st.y-u_Time * 0.3) * 0.4 + cos(st.y + u_Time * 0.5) * 0.2;
-  bias *= 4.14 * (sine(u_Time, 0.1, 0.) + 0.5);
+  bias *= 4.14 * (sine(u_Time, 0.03, 1.5) + 0.2);
   bias = sin(bias);
 
   vec3 pattern = vec3(pattern(uv, bias));
