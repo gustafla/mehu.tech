@@ -45,8 +45,8 @@ th, td {
   padding: 40px;
   background-image: linear-gradient(to right,
     rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.8) 5%,
-    rgba(0, 0, 0, 0.8) 95%,
+    rgba(0, 0, 0, 0.6) 5%,
+    rgba(0, 0, 0, 0.6) 95%,
     rgba(0, 0, 0, 0) 100%
   );
 }

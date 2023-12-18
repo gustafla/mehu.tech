@@ -55,8 +55,8 @@ void main() {
 
   vec3 pattern = vec3(pattern(uv, bias));
 
-  vec3 bg = vec3(sin(u_Time + FragCoord.x) * 0.5 + 0.5, 0., 1.);
-  FragColor = vec4(mix(bg, pattern, sine(u_Time, 0.9, 2.) * 0.2 + 0.6), 1.);
+  vec3 bg = vec3(sin(u_Time + FragCoord.x) * 0.25 + 0.7, 0.5, 1.) * 1.1;
+  FragColor = vec4(mix(bg, pattern, 0.13), 1.);
 }
 `;
 
