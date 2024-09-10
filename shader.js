@@ -91,6 +91,15 @@ float point_light(vec3 pos, vec3 light_pos, vec3 nml, float intensity) {
     float light_dist = distance(light_pos, pos);
     return max(dot(nml, -normalize(pos - light_pos)), 0.) * (intensity / (light_dist * light_dist));
 }
+vec3 aces_approx(vec3 v) {
+    v *= 0.6f;
+    float a = 2.51f;
+    float b = 0.03f;
+    float c = 2.43f;
+    float d = 0.59f;
+    float e = 0.14f;
+    return clamp((v*(a*v+b))/(v*(c*v+d)+e), 0.0f, 1.0f);
+}
 void main() {
     vec3 cam_pos = vec3(sin(u_Time * 0.2), sin(u_Time * 0.3), sin(u_Time * 0.4));
     vec3 cam_target = vec3(sin(u_Time * 0.54), sin(u_Time * 0.31), sin(u_Time * 0.14)) / 3. + vec3(0., 0., 3.);
@@ -104,12 +113,12 @@ void main() {
     uv.x /= 2. * PI;
 
     vec4 plights[6] = vec4[](
-    vec4(sine(u_Time, 0.23, 0.) * RADIUS * 0.5, sine(u_Time, 0.43, 0.) * RADIUS * 0.5, -sine(u_Time, 0.33, 0.) * 4. - 10., 20.),
-    vec4(sine(u_Time, 0.82, 0.) * RADIUS * 0.5, sine(u_Time, 0.53, 0.) * RADIUS * 0.5, -sine(u_Time, 0.35, 0.) * 6. - 16., 40.),
-    vec4(sine(u_Time, 0.34, 0.) * RADIUS * 0.5, sine(u_Time, 0.49, 0.) * RADIUS * 0.5, -sine(u_Time, 0.13, 0.) * 80. - 20., 60.),
-    vec4(sine(u_Time, 0.19, 0.) * RADIUS * 0.5, sine(u_Time, 0.44, 0.) * RADIUS * 0.5, -sine(u_Time, 0.21, 0.) * 100. - 20., 100.),
-    vec4(sine(u_Time, 0.10, 0.) * RADIUS * 0.5, sine(u_Time, 0.53, 0.) * RADIUS * 0.5, -sine(u_Time, 0.54, 0.) * 45. - 20., 60.),
-    vec4(sine(u_Time, 0.15, 0.) * RADIUS * 0.5, sine(u_Time, 0.13, 0.) * RADIUS * 0.5, -sine(u_Time, 0.09, 0.) * 43. - 20., 50.)
+    vec4(sine(u_Time, 0.23, 0.) * RADIUS * 0.5, sine(u_Time, 0.43, 0.) * RADIUS * 0.5, -sine(u_Time, 0.33, 0.) * 4. - 10., 70.),
+    vec4(sine(u_Time, 0.82, 0.) * RADIUS * 0.5, sine(u_Time, 0.53, 0.) * RADIUS * 0.5, -sine(u_Time, 0.35, 0.) * 6. - 16., 80.),
+    vec4(sine(u_Time, 0.34, 0.) * RADIUS * 0.5, sine(u_Time, 0.49, 0.) * RADIUS * 0.5, -sine(u_Time, 0.13, 0.) * 80. - 20., 190.),
+    vec4(sine(u_Time, 0.19, 0.) * RADIUS * 0.5, sine(u_Time, 0.44, 0.) * RADIUS * 0.5, -sine(u_Time, 0.21, 0.) * 100. - 20., 300.),
+    vec4(sine(u_Time, 0.10, 0.) * RADIUS * 0.5, sine(u_Time, 0.53, 0.) * RADIUS * 0.5, -sine(u_Time, 0.54, 0.) * 45. - 20., 100.),
+    vec4(sine(u_Time, 0.15, 0.) * RADIUS * 0.5, sine(u_Time, 0.13, 0.) * RADIUS * 0.5, -sine(u_Time, 0.09, 0.) * 43. - 20., 85.)
     );
 
     float light = 0.;
@@ -118,7 +127,7 @@ void main() {
     }
 
     vec3 texture = texture(uv) * sine(uv.x, 2. * PI, PI) + texture(vec2(mod(uv.x + 0.5, 1.), uv.y)) * sine(uv.x, 2. * PI, 0.);
-    FragColor = vec4(light * texture, 1.);
+    FragColor = vec4(aces_approx(light * texture), 1.);
 }
 `;
 
