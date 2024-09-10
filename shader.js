@@ -57,6 +57,7 @@ float pattern(vec2 uv, float bias) {
     return clamp((cos(uv.x) * cos(uv.y) + bias) * 3., 0., 1.);
 }
 vec3 texture(vec2 uv) {
+    uv = uv * 3.;
     uv = rotation(sine(u_Time, 0.12, 0.) * 2.) * uv;
     uv += vec2(sin(FragCoord.y + u_Time * 0.3), sin(FragCoord.x * 0.5 + u_Time * 0.2)) * 0.2;
     uv += vec2(sin(FragCoord.y * 2.22 + u_Time * 0.4), sin(FragCoord.x * 1.11 + u_Time * 0.4)) * 0.1;
@@ -108,26 +109,28 @@ void main() {
 
     vec3 pos = cam_pos + ray * tunnel(cam_pos, ray);
     vec3 nml = normalize(vec3(vec2(0.), pos.z) - pos);
-    vec2 uv = vec2(atan(pos.y, pos.x), pos.z / RADIUS);
-    uv.x += PI;
-    uv.x /= 2. * PI;
+    vec2 uv = vec2(atan(pos.y, pos.x) + PI, pos.z / RADIUS) / (2. * PI);
 
-    vec4 plights[6] = vec4[](
-    vec4(sine(u_Time, 0.23, 0.) * RADIUS * 0.5, sine(u_Time, 0.43, 0.) * RADIUS * 0.5, -sine(u_Time, 0.33, 0.) * 4. - 10., 70.),
-    vec4(sine(u_Time, 0.82, 0.) * RADIUS * 0.5, sine(u_Time, 0.53, 0.) * RADIUS * 0.5, -sine(u_Time, 0.35, 0.) * 6. - 16., 80.),
+    vec4 plights[3] = vec4[](
     vec4(sine(u_Time, 0.34, 0.) * RADIUS * 0.5, sine(u_Time, 0.49, 0.) * RADIUS * 0.5, -sine(u_Time, 0.13, 0.) * 80. - 20., 190.),
     vec4(sine(u_Time, 0.19, 0.) * RADIUS * 0.5, sine(u_Time, 0.44, 0.) * RADIUS * 0.5, -sine(u_Time, 0.21, 0.) * 100. - 20., 300.),
-    vec4(sine(u_Time, 0.10, 0.) * RADIUS * 0.5, sine(u_Time, 0.53, 0.) * RADIUS * 0.5, -sine(u_Time, 0.54, 0.) * 45. - 20., 100.),
-    vec4(sine(u_Time, 0.15, 0.) * RADIUS * 0.5, sine(u_Time, 0.13, 0.) * RADIUS * 0.5, -sine(u_Time, 0.09, 0.) * 43. - 20., 85.)
+    vec4(sine(u_Time, 0.10, 0.) * RADIUS * 0.5, sine(u_Time, 0.53, 0.) * RADIUS * 0.5, -sine(u_Time, 0.54, 0.) * 45. - 20., 100.)
     );
 
     float light = 0.;
-    for (int i = 0; i < 6; i++) {
+    float direct = 0.;
+    for (int i = 0; i < 3; i++) {
         light += point_light(pos, plights[i].xyz, nml, plights[i].w);
+        vec3 ltoc = cam_pos - plights[i].xyz;
+        direct += clamp(
+            (max(dot(ray, normalize(ltoc)), 0.) - (1. - 0.2 / pow(length(ltoc), 2.))) * float(1<<18),
+            0.,
+            1.
+        ) * plights[i].w;
     }
 
     vec3 texture = texture(uv) * sine(uv.x, 2. * PI, PI) + texture(vec2(mod(uv.x + 0.5, 1.), uv.y)) * sine(uv.x, 2. * PI, 0.);
-    FragColor = vec4(aces_approx(light * texture), 1.);
+    FragColor = vec4(aces_approx(light * texture + direct), 1.);
 }
 `;
 
