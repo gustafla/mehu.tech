@@ -56,23 +56,24 @@ vec3 cameraRay() {
 float pattern(vec2 uv, float bias) {
     return clamp((cos(uv.x) * cos(uv.y) + bias) * 3., 0., 1.);
 }
-vec3 texture(vec2 uv) {
+vec3 tex(vec2 uv, float t) {
+    vec2 ref = uv * 2. - 1.;
     uv = uv * 3.;
-    uv = rotation(sine(u_Time, 0.12, 0.) * 2.) * uv;
-    uv += vec2(sin(FragCoord.y + u_Time * 0.3), sin(FragCoord.x * 0.5 + u_Time * 0.2)) * 0.2;
-    uv += vec2(sin(FragCoord.y * 2.22 + u_Time * 0.4), sin(FragCoord.x * 1.11 + u_Time * 0.4)) * 0.1;
-    uv *= sine(u_Time, 0.1, u_Time * 0.2) * 50. + 140.;
+    uv = rotation(sine(t, 0.12, 0.) * 2.) * uv;
+    uv += vec2(sin(ref.y + t * 0.3), sin(ref.x * 0.5 + t * 0.2)) * 0.2;
+    uv += vec2(sin(ref.y * 2.22 + t * 0.4), sin(ref.x * 1.11 + t * 0.4)) * 0.1;
+    uv *= sine(t, 0.1, t * 0.2) * 50. + 140.;
 
-    vec2 st = vec2(FragCoord.x * aspectRatio(), FragCoord.y) * 1.4;
-    st += vec2(sin(FragCoord.y * 0.6 + u_Time * 0.7), sin(FragCoord.x * 0.3 + u_Time * 0.3)) * 0.6;
-    st += vec2(sin(FragCoord.y * 2.6 + u_Time * 0.7), sin(FragCoord.x * 4.3 + u_Time * 0.3)) * sine(u_Time, 0.75, 0.) * 2.3;
-    float bias = cos(st.x + u_Time) * 0.4 + sin(st.y - u_Time * 0.3) * 0.4 + cos(st.y + u_Time * 0.5) * 0.2;
-    bias *= 4.14 * (sine(u_Time, 0.03, 3.14) + 0.2);
+    vec2 st = vec2(ref.x * aspectRatio(), ref.y) * 1.4;
+    st += vec2(sin(ref.y * 0.6 + t * 0.7), sin(ref.x * 0.3 + t * 0.3)) * 0.6;
+    st += vec2(sin(ref.y * 2.6 + t * 0.7), sin(ref.x * 4.3 + t * 0.3)) * sine(t, 0.75, 0.) * 2.3;
+    float bias = cos(st.x + t) * 0.4 + sin(st.y - t * 0.3) * 0.4 + cos(st.y + t * 0.5) * 0.2;
+    bias *= 4.14 * (sine(t, 0.03, 3.14) + 0.2);
     bias = sin(bias);
 
     vec3 pattern = vec3(pattern(uv, bias));
 
-    vec3 bg = vec3(sin(u_Time + FragCoord.x) * 0.25 + 0.7, 0.5, 1.) * 1.1;
+    vec3 bg = vec3(sin(t + ref.x) * 0.25 + 0.7, 0.5, 1.) * 1.1;
     return mix(bg, pattern, 0.13);
 }
 float tunnel(vec3 origin, vec3 direction) {
@@ -129,8 +130,8 @@ void main() {
         ) * plights[i].w;
     }
 
-    vec3 texture = texture(uv) * sine(uv.x, 2. * PI, PI) + texture(vec2(mod(uv.x + 0.5, 1.), uv.y)) * sine(uv.x, 2. * PI, 0.);
-    FragColor = vec4(aces_approx(light * texture + direct), 1.);
+    vec3 albedo = tex(uv, u_Time) * sine(uv.x, 2. * PI, PI) + tex(vec2(mod(uv.x + 0.5, 1.), uv.y), u_Time) * sine(uv.x, 2. * PI, 0.);
+    FragColor = vec4(aces_approx(light * albedo + direct), 1.);
 }
 `;
 
